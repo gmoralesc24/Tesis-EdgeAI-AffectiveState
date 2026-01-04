@@ -1,0 +1,6 @@
+ID,Objetivo Específico,Métrica/Indicador Clave,Descripción
+OE1,Adquisición y Normalización de Datos Afectivos Multimodales,"Tasa de Muestras Útiles (≥95%), Tamaño del dataset (n≥500 videos)","Crear/seleccionar dataset local de video en aulas híbridas reales, etiquetar estados afectivos (Atención, Distracción, Fatiga)"
+OE2,Identificación y Extracción de Características Faciales y Posturales,"Precisión de extracción de landmarks (≥98%), Número de features (20-30)","Extraer 20-30 características clave de rostro (emociones, mirada, landmarks) y postura (pose, inclinación) correlacionadas con atención"
+OE3,Optimización y Despliegue de Modelos Ligeros en Arquitectura Edge,"Precisión del modelo (≥90%), Latencia (≤100ms), FPS (≥25)","Implementar MobileNet, Mini-Xception, YOLO-Nano con cuantización 8-bit y poda para ejecutar en Edge (Jetson Nano, RPi5)"
+OE4,Diseño e Integración del Prototipo Funcional y Dashboard de Alertas,"Usabilidad (≥4.0/5.0 Likert), Precisión de alertas (≥80%)","Desarrollar lógica de fusión multimodal, interfaz de alertas en tiempo real y dashboard histórico para docentes"
+OE5,Validación Aplicada y Evaluación de Impacto Pedagógico,"Exactitud general (≥90%), Tiempo real <100ms, Satisfacción docente (≥4.0/5.0)","Prueba en aula híbrida real, medición de latencia/FPS, validación con encuesta Likert de docentes sobre utilidad pedagógica"

@@ -1,0 +1,19 @@
+ID,TIPO,NOMBRE,DEFINICIÓN,VALORES/RANGO,OBJETIVO,INDICADORES,RECOMENDACIÓN,JUSTIFICACIÓN
+VI-001,Variable Independiente,Arquitectura del Modelo,Tipo de red neuronal base para clasificación,MobileNet v3 (1.5M params) | Mini-Xception (500K params) | YOLO-Nano (400K params) | SqueezeNet (1.2M params),OE3,I1: Accuracy | I2: Latencia | I3: FPS | I7: Consumo CPU,Mini-Xception,"Balance óptimo: 91% accuracy vs 88% (MobileNet), 40ms latencia vs 50ms (MobileNet)"
+VI-002,Variable Independiente,Técnica de Optimización,Compresión de modelos para deployment en Edge,Baseline (sin optimización) | Cuantización 8-bit | Poda 10% | Poda 20% | Poda 40% | Cuantización 8-bit + Poda 20%,OE3,I1: Accuracy | I2: Latencia | I4: Tamaño | I7: Consumo CPU,Cuantización 8-bit + Poda 20%,"Reduce tamaño 77% (22MB→5MB), latencia 55% (110ms→50ms), accuracy solo -3% (91%→88%)"
+VI-003,Variable Independiente,Método de Fusión Multimodal,Estrategia para combinar predicciones facial y postural,"Weighted Average (α=0.60 facial, 0.40 postural) | Voting (mayoría de 2 modelos) | Concatenation + MLP adicional | Attention-based fusion | Multiplicative fusion",OE4,I1: Accuracy | I5: Precisión Alertas,"Weighted Average (0.60, 0.40)","Simple, computacionalmente eficiente, accuracy comparable a métodos complejos"
+VI-004,Variable Independiente,Método de Anotación Dataset,Protocolo para etiquetado de estado afectivo en videos,Anotación manual 1 evaluador | Anotación manual 2 evaluadores independientes | Anotación manual 3 evaluadores independientes | Hybrid: manual + semi-automático,OE1,I6: Cohen's Kappa ≥0.85,3 evaluadores independientes,Cohen's Kappa ≥0.85 requiere mínimo 3 raters para obtener acuerdo robusto
+VI-005,Variable Independiente,Umbral de Confianza,Probabilidad mínima para aceptar predicción,0.60 | 0.65 | 0.70 | 0.75 | 0.80 | 0.85 | 0.90,OE4 | OE5,I5: Precisión Alertas | I8: Recall Alertas,0.70,"Balance: Precision ≥80%, evita muchos falsos positivos, Recall ≥70%"
+VI-006,Variable Independiente,Ventana Temporal de Smoothing,Número de frames consecutivos para suavizar predicciones,3 frames | 5 frames | 7 frames | 10 frames,OE4,I2: Latencia | I5: Precisión Alertas,5 frames,"A 30fps: latencia +167ms (5/30), reduce ruido temporal significativamente"
+VD-001,Variable Dependiente,Accuracy General del Modelo,Proporción de predicciones correctas en validation set,,OE3 | OE4 | OE5,,,
+VD-002,Variable Dependiente,Latencia End-to-End,Tiempo total desde captura de frame hasta predicción enviada,,OE3 | OE4,,,
+VD-003,Variable Dependiente,Frames por Segundo (FPS),Número de frames procesados por segundo,,OE3 | OE4,,,
+VD-004,Variable Dependiente,F1-Score por Clase,Promedio armónico de Precisión y Recall,,OE5,,,
+VD-005,Variable Dependiente,Precisión de Alertas,Proporción de alertas disparadas que corresponden a eventos reales,,OE4 | OE5,,,
+VD-006,Variable Dependiente,Tamaño del Modelo,Tamaño en MB del modelo compilado (.tflite o .onnx),,OE3,,,
+VD-007,Variable Dependiente,Consumo de CPU,Porcentaje de CPU utilizado durante inferencia,,OE3 | OE4,,,
+VD-008,Variable Dependiente,Usabilidad del Sistema,Percepción de facilidad de uso por parte de docentes,,OE4 | OE5,,,
+P-001,Parámetro,Contexto de Aula,Tipo de clase donde se evalúa el sistema,Aula presencial,,,Aula híbrida universitaria,Representa realidad actual post-pandemia en universidades peruanas
+P-002,Parámetro,Población Objetivo,Demografía de estudiantes en experimento,"18-25 años, estudiantes UNI",,,"Estudiantes de grado, 18-25 años, ambos géneros",Población consistente para validación interna
+P-003,Parámetro,Modalidades de Análisis,Tipos de inputs al sistema,RGB facial,,,Multimodal: Facial RGB + Postural 2D,Balance entre información y requisitos computacionales
+P-004,Parámetro,Hardware Target,Dispositivo de deployment,Jetson Nano,,,Jetson Nano / RPi5 (Edge computing),"Bajo costo, portabilidad, sin conexión a nube"

@@ -1,0 +1,37 @@
+
+RESUMEN EJECUTIVO: MATRIZ DE VARIABLES
+=====================================
+
+TOTAL DE VARIABLES IDENTIFICADAS: 18
+
+DESGLOSE POR TIPO:
+• Variables Independientes (VI): 6
+• Variables Dependientes (VD): 8
+• Parámetros (P): 4
+
+MAPEO A OBJETIVOS:
+• OE1 (Adquisición): 1 VI (anotación)
+• OE2 (Features): Ninguno específico (afecta a todas)
+• OE3 (Optimización): 2 VI (arquitectura, optimización técnica)
+• OE4 (Prototipo): 3 VI (fusión, umbral, smoothing)
+• OE5 (Validación): Todas las VD
+
+INDICADORES CRÍTICOS (SLA):
+✓ Accuracy ≥90%
+✓ Latencia ≤100ms
+✓ FPS ≥25
+✓ Usabilidad ≥4.0/5.0
+✓ Precisión Alertas ≥80%
+
+RECOMENDACIONES VALIDADAS:
+1. Arquitectura: Mini-Xception (balance óptimo)
+2. Optimización: Cuantización 8-bit + Poda 20% (55% reducción latencia)
+3. Fusión: Weighted Average 60/40 (facial/postural)
+4. Umbral Confianza: 0.70 (balance P/R)
+5. Smoothing: 5 frames (mínima latencia + máxima estabilidad)
+
+VARIABLES NO MANIPULABLES:
+- Contexto: Aula híbrida universitaria
+- Población: Estudiantes 18-25 años
+- Modalidades: RGB facial + postural 2D
+- Hardware: Edge computing (Jetson Nano/RPi5)

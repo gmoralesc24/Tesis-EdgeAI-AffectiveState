@@ -1,0 +1,696 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación: Medición de Estados Afectivos - Edge AI</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f0f0;
+        }
+
+        .presentation {
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            padding: 40px;
+            page-break-after: always;
+            min-height: 700px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .slide.title-slide {
+            background: linear-gradient(135deg, #003366 0%, #0066CC 50%, #004d99 100%);
+            color: white;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .slide h1 {
+            color: #003366;
+            font-size: 42px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #0066CC;
+            padding-bottom: 15px;
+        }
+
+        .slide.title-slide h1 {
+            color: white;
+            border: none;
+            font-size: 48px;
+            margin-bottom: 30px;
+        }
+
+        .slide h2 {
+            color: #0066CC;
+            font-size: 32px;
+            margin-bottom: 25px;
+            margin-top: 20px;
+        }
+
+        .slide h3 {
+            color: #004d99;
+            font-size: 24px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 28px;
+            color: #0099FF;
+            margin-bottom: 40px;
+        }
+
+        .slide.title-slide .subtitle {
+            color: #64C8FF;
+        }
+
+        .content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        th {
+            background: #0066CC;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .diagram {
+            background: #f0f7ff;
+            border-left: 4px solid #0066CC;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .flow-box {
+            display: inline-block;
+            background: #0066CC;
+            color: white;
+            padding: 12px 18px;
+            margin: 8px 5px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 13px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .flow-arrow {
+            display: inline-block;
+            margin: 0 10px;
+            color: #003366;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .highlight-box {
+            background: #FFFFCC;
+            border-left: 4px solid #FF9900;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .metric-table {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .metric-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .metric-cell {
+            background: #f0f7ff;
+            padding: 15px;
+            border-left: 4px solid #0066CC;
+            border-radius: 4px;
+        }
+
+        .metric-label {
+            font-weight: bold;
+            color: #003366;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .metric-value {
+            font-size: 18px;
+            color: #0066CC;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            color: #999;
+            font-size: 12px;
+        }
+
+        .objetivos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .objetivo-card {
+            background: #f0f7ff;
+            border-left: 4px solid #0066CC;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .objetivo-title {
+            font-weight: bold;
+            color: #003366;
+            margin-bottom: 8px;
+        }
+
+        .objetivo-detail {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #999;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .process-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .process-step {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .step-num {
+            background: #0066CC;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex-grow: 1;
+            background: #f0f7ff;
+            padding: 12px 15px;
+            border-radius: 4px;
+            border-left: 4px solid #0066CC;
+        }
+
+        @media print {
+            .slide { page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="presentation">
+
+<!-- SLIDE 1: PORTADA -->
+<div class="slide title-slide">
+    <h1>MEDICIÓN AUTOMÁTICA DE ESTADOS AFECTIVOS<br>EN AULAS HÍBRIDAS</h1>
+    <p class="subtitle">Sistema Edge AI Multimodal con Análisis de Variables y Arquitectura</p>
+    <div style="margin-top: 80px; font-size: 18px;">
+        <p>Maestría en Inteligencia Artificial</p>
+        <p>Universidad Nacional de Ingeniería (UNI)</p>
+        <p style="margin-top: 20px; font-size: 14px; opacity: 0.8;">Diciembre 2025</p>
+    </div>
+</div>
+
+<!-- SLIDE 2: ÍNDICE -->
+<div class="slide">
+    <h1>CONTENIDOS</h1>
+    <ul style="font-size: 18px; margin-top: 30px;">
+        <li><strong>Slide 3:</strong> Redefinición de Objetivos Específicos (5 OE)</li>
+        <li><strong>Slide 4:</strong> Variables del Proyecto (VI, VD, P)</li>
+        <li><strong>Slide 5:</strong> Variables: Asociación a Objetivos</li>
+        <li><strong>Slide 6:</strong> Indicadores y Métricas</li>
+        <li><strong>Slide 7:</strong> Arquitectura del Sistema (7 Estaciones)</li>
+        <li><strong>Slide 8:</strong> Pipeline de Datos Detallado</li>
+        <li><strong>Slide 9:</strong> Datasets y Recomendaciones</li>
+        <li><strong>Slide 10:</strong> Diseño Experimental y Timeline</li>
+    </ul>
+    <div class="footer">
+        Análisis Integral - Proyecto de Investigación
+    </div>
+</div>
+
+<!-- SLIDE 3: OBJETIVOS ESPECÍFICOS -->
+<div class="slide">
+    <h1>OBJETIVOS ESPECÍFICOS (OE)</h1>
+    <h2 style="color: #0099FF; font-size: 24px;">De 4 Objetivos Originales a 5 Redefinidos</h2>
+
+    <table>
+        <tr>
+            <th>OE</th>
+            <th>Nombre</th>
+            <th>Entrada</th>
+            <th>Proceso</th>
+            <th>Salida</th>
+        </tr>
+        <tr>
+            <td><strong>OE1</strong></td>
+            <td>Adquisición de Datos</td>
+            <td>Videos brutos</td>
+            <td>Captura + Anotación</td>
+            <td>Dataset etiquetado (n≥500)</td>
+        </tr>
+        <tr>
+            <td><strong>OE2</strong></td>
+            <td>Extracción de Features</td>
+            <td>Dataset etiquetado</td>
+            <td>Feature engineering</td>
+            <td>20 features validados</td>
+        </tr>
+        <tr>
+            <td><strong>OE3</strong></td>
+            <td>Optimización Edge</td>
+            <td>Modelos pre-entrenados</td>
+            <td>Cuantización + Poda</td>
+            <td>Modelos ligeros (≤5MB)</td>
+        </tr>
+        <tr>
+            <td><strong>OE4</strong></td>
+            <td>Prototipo + Dashboard</td>
+            <td>Modelos optimizados</td>
+            <td>Fusión + Interfaz</td>
+            <td>Sistema operacional</td>
+        </tr>
+        <tr>
+            <td><strong>OE5</strong></td>
+            <td>Validación Pedagógica</td>
+            <td>Sistema en aula real</td>
+            <td>Pruebas + Mediciones</td>
+            <td>Reporte de impacto</td>
+        </tr>
+    </table>
+</div>
+
+<!-- SLIDE 4: VARIABLES DEL PROYECTO -->
+<div class="slide">
+    <h1>VARIABLES DEL PROYECTO</h1>
+
+    <h3>Variables Independientes (VI) - Controlables:</h3>
+    <ul>
+        <li><strong>VI-001:</strong> Arquitectura (MobileNet, Mini-Xception, YOLO-Nano)</li>
+        <li><strong>VI-002:</strong> Optimización (Cuantización 8-bit, Poda 10-40%)</li>
+        <li><strong>VI-003:</strong> Fusión Multimodal (Weighted Avg, Voting, Attention)</li>
+        <li><strong>VI-004:</strong> Anotación Dataset (1, 2, 3 evaluadores)</li>
+        <li><strong>VI-005:</strong> Umbral Confianza (0.60 - 0.90)</li>
+        <li><strong>VI-006:</strong> Ventana Temporal (3-10 frames)</li>
+    </ul>
+
+    <h3 style="margin-top: 20px;">Variables Dependientes (VD) - Medibles:</h3>
+    <ul>
+        <li><strong>VD-001:</strong> Accuracy General (≥90%)</li>
+        <li><strong>VD-002:</strong> Latencia E2E (≤100ms) <span style="color: #FF0000;">★ CRÍTICA</span></li>
+        <li><strong>VD-003:</strong> FPS (≥25 fps)</li>
+        <li><strong>VD-004:</strong> F1-Score (≥0.86)</li>
+        <li><strong>VD-005:</strong> Precisión de Alertas (≥80%)</li>
+        <li><strong>VD-006:</strong> Tamaño Modelo (≤15MB)</li>
+        <li><strong>VD-007:</strong> Consumo CPU (≤40%)</li>
+        <li><strong>VD-008:</strong> Usabilidad (≥4.0/5.0)</li>
+    </ul>
+</div>
+
+<!-- SLIDE 5: MATRIZ VARIABLES-OBJETIVOS -->
+<div class="slide">
+    <h1>MATRIZ: VARIABLES → OBJETIVOS</h1>
+
+    <table style="font-size: 12px;">
+        <tr>
+            <th>Variable</th>
+            <th>OE1</th>
+            <th>OE2</th>
+            <th>OE3</th>
+            <th>OE4</th>
+            <th>OE5</th>
+            <th>Indicadores Afectados</th>
+        </tr>
+        <tr>
+            <td><strong>VI-001: Arquitectura</strong></td>
+            <td></td>
+            <td></td>
+            <td>✓✓</td>
+            <td></td>
+            <td></td>
+            <td>I1, I2, I3, I7</td>
+        </tr>
+        <tr>
+            <td><strong>VI-002: Optimización</strong></td>
+            <td></td>
+            <td></td>
+            <td>✓✓</td>
+            <td></td>
+            <td></td>
+            <td>I1, I2, I4, I7</td>
+        </tr>
+        <tr>
+            <td><strong>VI-003: Fusión</strong></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✓✓</td>
+            <td></td>
+            <td>I1, I5</td>
+        </tr>
+        <tr>
+            <td><strong>VI-004: Anotación</strong></td>
+            <td>✓✓</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>I6: Cohen's Kappa</td>
+        </tr>
+        <tr>
+            <td><strong>VI-005: Umbral Conf</strong></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✓</td>
+            <td>✓</td>
+            <td>I5, I8</td>
+        </tr>
+        <tr>
+            <td><strong>VI-006: Smoothing</strong></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>✓</td>
+            <td></td>
+            <td>I2, I5</td>
+        </tr>
+    </table>
+
+    <p style="margin-top: 20px; font-size: 14px; color: #555;">
+        <strong>Leyenda:</strong> ✓✓ = Relación Directa/Crítica | ✓ = Relación Importante | (vacío) = Mínima relación
+    </p>
+</div>
+
+<!-- SLIDE 6: INDICADORES Y MÉTRICAS -->
+<div class="slide">
+    <h1>INDICADORES Y MÉTRICAS DE DESEMPEÑO</h1>
+
+    <div class="metric-row">
+        <div class="metric-cell">
+            <div class="metric-label">Accuracy General</div>
+            <div class="metric-value">≥90%</div>
+            <div style="font-size: 11px; color: #666; margin-top: 5px;">Min: 85% | Ópt: ≥95%</div>
+        </div>
+        <div class="metric-cell">
+            <div class="metric-label">Latencia E2E</div>
+            <div class="metric-value">≤100ms</div>
+            <div style="font-size: 11px; color: #666; margin-top: 5px;">Min: 150ms | Ópt: ≤50ms</div>
+        </div>
+        <div class="metric-cell">
+            <div class="metric-label">FPS</div>
+            <div class="metric-value">≥25 fps</div>
+            <div style="font-size: 11px; color: #666; margin-top: 5px;">Min: 15 | Ópt: ≥30</div>
+        </div>
+        <div class="metric-cell">
+            <div class="metric-label">F1-Score</div>
+            <div class="metric-value">≥0.86</div>
+            <div style="font-size: 11px; color: #666; margin-top: 5px;">Min: 0.78 | Ópt: ≥0.91</div>
+        </div>
+    </div>
+
+    <div class="metric-row">
+        <div class="metric-cell">
+            <div class="metric-label">Precisión Alertas</div>
+            <div class="metric-value">≥80%</div>
+            <div style="font-size: 11px; color: #666; margin-top: 5px;">Min: 75% | Ópt: ≥90%</div>
+        </div>
+        <div class="metric-cell">
+            <div class="metric-label">Tamaño Modelo</div>
+            <div class="metric-value">≤15MB</div>
+            <div style="font-size: 11px; color: #666; margin-top: 5px;">Min: 20MB | Ópt: ≤10MB</div>
+        </div>
+        <div class="metric-cell">
+            <div class="metric-label">Consumo CPU</div>
+            <div class="metric-value">≤40%</div>
+            <div style="font-size: 11px; color: #666; margin-top: 5px;">Min: 50% | Ópt: ≤30%</div>
+        </div>
+        <div class="metric-cell">
+            <div class="metric-label">Usabilidad</div>
+            <div class="metric-value">≥4.0/5.0</div>
+            <div style="font-size: 11px; color: #666; margin-top: 5px;">Min: 3.5 | Ópt: ≥4.5</div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 7: ARQUITECTURA SISTEMA -->
+<div class="slide">
+    <h1>ARQUITECTURA DEL SISTEMA EDGE AI</h1>
+    <h2 style="color: #0099FF; font-size: 24px;">Pipeline de 7 Estaciones</h2>
+
+    <div class="process-flow">
+        <div class="process-step">
+            <div class="step-num">1</div>
+            <div class="step-content"><strong>Frame Buffer</strong> - Almacena 5 frames consecutivos (30-60 FPS)</div>
+        </div>
+        <div class="process-step">
+            <div class="step-num">2</div>
+            <div class="step-content"><strong>Análisis Paralelo</strong> - Facial (OpenFace, 12 feat) + Postural (MoveNet, 8 feat)</div>
+        </div>
+        <div class="process-step">
+            <div class="step-num">3</div>
+            <div class="step-content"><strong>Fusión & Normalización</strong> - 20 features → Z-score normalization</div>
+        </div>
+        <div class="process-step">
+            <div class="step-num">4</div>
+            <div class="step-content"><strong>Inferencia Dual</strong> - Mini-Xception (40ms) + MobileNet v3 (50ms)</div>
+        </div>
+        <div class="process-step">
+            <div class="step-num">5</div>
+            <div class="step-content"><strong>Fusión Multimodal</strong> - Weighted Average (60% facial, 40% postural)</div>
+        </div>
+        <div class="process-step">
+            <div class="step-num">6</div>
+            <div class="step-content"><strong>Post-procesamiento</strong> - Temporal smoothing (5 frames), Confidence threshold (0.70)</div>
+        </div>
+        <div class="process-step">
+            <div class="step-num">7</div>
+            <div class="step-content"><strong>Alertas + Output</strong> - Genera alertas si Distracción >3s o Fatiga >5s</div>
+        </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 20px;">
+        <strong>Especificaciones:</strong> Latencia total ≤100ms | FPS ≥25 | RAM ≤250MB | CPU ≤40%
+    </div>
+</div>
+
+<!-- SLIDE 8: RECOMENDACIONES VALIDADAS -->
+<div class="slide">
+    <h1>RECOMENDACIONES TÉCNICAS VALIDADAS</h1>
+
+    <div class="objetivo-card" style="margin-bottom: 15px;">
+        <div class="objetivo-title">✓ ARQUITECTURA: Mini-Xception (500K params)</div>
+        <div class="objetivo-detail">
+            Accuracy: 91% | Latencia: 40ms | FPS: 25 | CPU: 38%<br>
+            <strong>vs</strong> MobileNet (88% accuracy, 50ms latencia) | <strong>vs</strong> YOLO-Nano (86% accuracy)
+        </div>
+    </div>
+
+    <div class="objetivo-card" style="margin-bottom: 15px;">
+        <div class="objetivo-title">✓ OPTIMIZACIÓN: Cuantización 8-bit + Poda 20%</div>
+        <div class="objetivo-detail">
+            Tamaño: 5MB (-77% vs baseline 22MB) | Latencia: 50ms (-55%) | Accuracy: 88% (-3%)<br>
+            <strong>Trade-off Óptimo:</strong> Pérdida mínima de precisión, ganancia máxima en velocidad/tamaño
+        </div>
+    </div>
+
+    <div class="objetivo-card" style="margin-bottom: 15px;">
+        <div class="objetivo-title">✓ FUSIÓN: Weighted Average 60/40 (Facial/Postural)</div>
+        <div class="objetivo-detail">
+            Simple, computacionalmente eficiente | Accuracy comparable a métodos sofisticados<br>
+            <strong>Ventaja:</strong> Bajo overhead computacional en Edge, fácil interpretabilidad
+        </div>
+    </div>
+
+    <div class="objetivo-card">
+        <div class="objetivo-title">✓ UMBRALES: Confianza 0.70, Smoothing 5 frames</div>
+        <div class="objetivo-detail">
+            Confianza 0.70 = Balance entre Precision (≥80%) y Recall (≥70%)<br>
+            <strong>Smoothing 5f @ 30fps:</strong> Latencia +167ms (tolerable), ruido temporal -60%
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 9: DATASETS DISPONIBLES -->
+<div class="slide">
+    <h1>DATASETS PRIORITARIOS Y DISPONIBLES</h1>
+
+    <table style="font-size: 13px;">
+        <tr>
+            <th>Dataset</th>
+            <th>Tamaño</th>
+            <th>Características</th>
+            <th>Relevancia</th>
+        </tr>
+        <tr>
+            <td><strong>DAiSEE</strong></td>
+            <td>9,068 videos</td>
+            <td>Engagement 4 niveles, multimodal</td>
+            <td>⭐⭐⭐ ALTÍSIMA</td>
+        </tr>
+        <tr>
+            <td><strong>DIPSER (2025)</strong></td>
+            <td>Nuevo</td>
+            <td>Facial+Postural+Smartwatch</td>
+            <td>⭐⭐⭐ ALTÍSIMA</td>
+        </tr>
+        <tr>
+            <td><strong>EngageNet</strong></td>
+            <td>31 horas</td>
+            <td>Gaze, head pose, action units</td>
+            <td>⭐⭐⭐ ALTÍSIMA</td>
+        </tr>
+        <tr>
+            <td><strong>FER2013</strong></td>
+            <td>35,887 imgs</td>
+            <td>7 emociones, 48x48px</td>
+            <td>⭐⭐ ALTA</td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top: 25px;">Dataset Local Recomendado:</h3>
+    <div class="highlight-box">
+        <strong>Especificaciones Mínimas:</strong><br>
+        • 50+ estudiantes diferentes<br>
+        • 500+ videos de 10 segundos (1.5 horas mínimo)<br>
+        • 3 evaluadores independientes (Cohen's Kappa ≥0.85)<br>
+        • Contexto: Aulas híbridas reales universitarias<br>
+        • Etiquetas: Atención, Distracción, Fatiga, Neutral (4 clases)
+    </div>
+</div>
+
+<!-- SLIDE 10: TIMELINE Y PRÓXIMOS PASOS -->
+<div class="slide">
+    <h1>TIMELINE Y PLAN DE IMPLEMENTACIÓN</h1>
+
+    <table>
+        <tr>
+            <th>Fase</th>
+            <th>Semanas</th>
+            <th>Entregables</th>
+            <th>Objetivo Asociado</th>
+        </tr>
+        <tr>
+            <td><strong>Preparación</strong></td>
+            <td>1-2</td>
+            <td>Solicitud datos, environment setup, literatura</td>
+            <td>General</td>
+        </tr>
+        <tr>
+            <td><strong>Adquisición & EDA</strong></td>
+            <td>3-4</td>
+            <td>Dataset completo, análisis exploratorio</td>
+            <td>OE1, OE2</td>
+        </tr>
+        <tr>
+            <td><strong>Feature Engineering</strong></td>
+            <td>5-6</td>
+            <td>20 features validados, matriz características</td>
+            <td>OE2</td>
+        </tr>
+        <tr>
+            <td><strong>Training & Opt</strong></td>
+            <td>7-10</td>
+            <td>Modelos entrenados, cuantización, pruning</td>
+            <td>OE3</td>
+        </tr>
+        <tr>
+            <td><strong>Prototipo & UI</strong></td>
+            <td>11-12</td>
+            <td>Pipeline Edge AI, Dashboard Flask/React</td>
+            <td>OE4</td>
+        </tr>
+        <tr>
+            <td><strong>Validación Real</strong></td>
+            <td>13-14</td>
+            <td>Pruebas en ≥10 sesiones, encuestas docentes</td>
+            <td>OE5</td>
+        </tr>
+        <tr>
+            <td><strong>Documentación</strong></td>
+            <td>15-16</td>
+            <td>Reporte final, publicación, repositorio</td>
+            <td>General</td>
+        </tr>
+    </table>
+
+    <div class="footer" style="margin-top: 30px;">
+        <strong>Total: 16 Semanas (4 Meses)</strong> | Documento: Diciembre 2025
+    </div>
+</div>
+
+</div>
+
+</body>
+</html>

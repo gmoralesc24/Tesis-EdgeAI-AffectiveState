@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación: Edge AI Multimodal</title>
+    <style>
+        * { margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .slide {
+            page-break-after: always;
+            width: 100%;
+            height: 100vh;
+            padding: 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        .slide-title { color: #003366; font-size: 48px; font-weight: bold; margin-bottom: 30px; }
+        .slide-subtitle { color: #0066CC; font-size: 32px; margin-bottom: 50px; }
+        .slide-content { color: #333; font-size: 18px; line-height: 1.8; }
+        .bg-dark { background: linear-gradient(135deg, #003366 0%, #004d99 100%); color: white; }
+        .bg-light { background: #f5f5f5; }
+        .bg-white { background: white; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { background: #0066CC; color: white; padding: 12px; text-align: left; }
+        td { border: 1px solid #ddd; padding: 10px; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .diagram { background: white; padding: 20px; border-radius: 8px; margin: 15px 0; }
+        .box {
+            display: inline-block;
+            background: #0066CC;
+            color: white;
+            padding: 15px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 120px;
+        }
+        .arrow { display: inline-block; margin: 0 10px; font-size: 24px; color: #003366; }
+        .highlight { background: #FFFF99; padding: 2px 5px; border-radius: 3px; }
+        ul { margin-left: 20px; }
+        li { margin: 10px 0; }
+        .footnote { font-size: 12px; color: #999; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+    <div class="slide bg-dark">
+        <h1 class="slide-title">MEDICIÓN AUTOMÁTICA DE ESTADOS AFECTIVOS
+EN AULAS HÍBRIDAS MEDIANTE EDGE AI</h1>
+        <h2 class="slide-subtitle">Análisis Integral de Objetivos, Variables y Arquitectura</h2>
+        <div class="slide-content">
+            
+        <h3 style="color: #64C8FF; margin-top: 50px;">Maestría en Inteligencia Artificial</h3>
+        <p style="margin-top: 20px;">Universidad Nacional de Ingeniería (UNI)</p>
+        <p>Diciembre 2025</p>
+        
+        </div>
+        <div class="footnote">Slide 1 de 5</div>
+    </div>
+    
+    <div class="slide bg-white">
+        <h1 class="slide-title">OBJETIVOS DEL PROYECTO</h1>
+        <h2 class="slide-subtitle">De 4 a 5 Objetivos Específicos</h2>
+        <div class="slide-content">
+            
+        <table style="margin-top: 30px;">
+            <tr>
+                <th style="width: 8%;">OE</th>
+                <th style="width: 28%;">Objetivo</th>
+                <th style="width: 32%;">Entrada</th>
+                <th style="width: 32%;">Salida</th>
+            </tr>
+            <tr>
+                <td><b>OE1</b></td>
+                <td>Adquisición de Datos</td>
+                <td>Videos brutos (50+ est.)</td>
+                <td>Dataset etiquetado (n≥500)</td>
+            </tr>
+            <tr>
+                <td><b>OE2</b></td>
+                <td>Extracción Features</td>
+                <td>Dataset etiquetado</td>
+                <td>Feature matrix (20 features)</td>
+            </tr>
+            <tr>
+                <td><b>OE3</b></td>
+                <td>Optimización Edge</td>
+                <td>Modelos pre-entrenados</td>
+                <td>Modelos optimizados (≤5MB)</td>
+            </tr>
+            <tr>
+                <td><b>OE4</b></td>
+                <td>Prototipo+Dashboard</td>
+                <td>Modelos+Features</td>
+                <td>Sistema operacional</td>
+            </tr>
+            <tr>
+                <td><b>OE5</b></td>
+                <td>Validación Pedagógica</td>
+                <td>Sistema en aula real</td>
+                <td>Reporte de impacto</td>
+            </tr>
+        </table>
+        
+        </div>
+        <div class="footnote">Slide 2 de 5</div>
+    </div>
+    
+    <div class="slide bg-white">
+        <h1 class="slide-title">VARIABLES DEL PROYECTO</h1>
+        <h2 class="slide-subtitle">Independientes, Dependientes y Parámetros</h2>
+        <div class="slide-content">
+            
+        <h3 style="color: #003366; margin-top: 20px;">Variables Independientes (Controlables):</h3>
+        <ul>
+            <li><b>Arquitectura:</b> MobileNet v3, Mini-Xception, YOLO-Nano</li>
+            <li><b>Optimización:</b> Cuantización 8-bit, Poda 10-40%</li>
+            <li><b>Feature Extraction:</b> OpenFace, MediaPipe, MoveNet</li>
+            <li><b>Fusión Multimodal:</b> Weighted Average, Voting, Concatenation+MLP</li>
+            <li><b>Umbrales:</b> Confianza 0.60-0.90, Ventana 3-10 frames</li>
+        </ul>
+
+        <h3 style="color: #003366; margin-top: 25px;">Variables Dependientes (Medibles):</h3>
+        <ul>
+            <li><b>Accuracy:</b> ≥90% en validation set</li>
+            <li><b>Latencia:</b> ≤100ms (captura → predicción)</li>
+            <li><b>FPS:</b> ≥25 frames por segundo</li>
+            <li><b>Usabilidad:</b> ≥4.0/5.0 (escala Likert)</li>
+            <li><b>Precisión Alertas:</b> ≥80% (Precision métrica)</li>
+        </ul>
+
+        <h3 style="color: #003366; margin-top: 25px;">Parámetros (No Controlables):</h3>
+        <ul>
+            <li>Contexto: Aula híbrida universitaria</li>
+            <li>Población: Estudiantes 18-25 años</li>
+            <li>Modalidades: Análisis facial RGB + postural 2D</li>
+        </ul>
+        
+        </div>
+        <div class="footnote">Slide 3 de 5</div>
+    </div>
+    
+    <div class="slide bg-white">
+        <h1 class="slide-title">INDICADORES Y MÉTRICAS</h1>
+        <h2 class="slide-subtitle">Rangos Mínimo-Objetivo-Óptimo</h2>
+        <div class="slide-content">
+            
+        <table style="margin-top: 20px; font-size: 15px;">
+            <tr>
+                <th>Indicador</th>
+                <th>Mínimo</th>
+                <th>Objetivo</th>
+                <th>Óptimo</th>
+            </tr>
+            <tr>
+                <td><b>Accuracy General</b></td>
+                <td>85%</td>
+                <td>≥90%</td>
+                <td>≥95%</td>
+            </tr>
+            <tr>
+                <td><b>F1-Score (promedio)</b></td>
+                <td>0.78</td>
+                <td>≥0.86</td>
+                <td>≥0.91</td>
+            </tr>
+            <tr>
+                <td><b>Latencia E2E</b></td>
+                <td>150ms</td>
+                <td>≤100ms</td>
+                <td>≤50ms</td>
+            </tr>
+            <tr>
+                <td><b>FPS</b></td>
+                <td>15 fps</td>
+                <td>≥25 fps</td>
+                <td>≥30 fps</td>
+            </tr>
+            <tr>
+                <td><b>Tamaño Modelo</b></td>
+                <td>20MB</td>
+                <td>≤15MB</td>
+                <td>≤10MB</td>
+            </tr>
+            <tr>
+                <td><b>Consumo CPU</b></td>
+                <td>50%</td>
+                <td>≤40%</td>
+                <td>≤30%</td>
+            </tr>
+            <tr>
+                <td><b>Usabilidad (Likert)</b></td>
+                <td>3.5/5</td>
+                <td>≥4.0/5</td>
+                <td>≥4.5/5</td>
+            </tr>
+            <tr>
+                <td><b>Precisión Alertas</b></td>
+                <td>75%</td>
+                <td>≥80%</td>
+                <td>≥90%</td>
+            </tr>
+        </table>
+        
+        </div>
+        <div class="footnote">Slide 4 de 5</div>
+    </div>
+    
+    <div class="slide bg-light">
+        <h1 class="slide-title">ARQUITECTURA DEL SISTEMA EDGE AI</h1>
+        <h2 class="slide-subtitle">Pipeline de 7 Estaciones</h2>
+        <div class="slide-content">
+            
+        <div class="diagram" style="margin-top: 20px; font-size: 16px;">
+            <div style="text-align: center;">
+                <div class="box">Entrada: Video (RGB)</div>
+                <div class="arrow">↓</div>
+                <div class="box">Frame Buffer (5f)</div>
+                <div class="arrow">↓</div>
+                <div class="box">Análisis Paralelo (Facial+Postural)</div>
+                <div class="arrow">↓</div>
+                <div class="box">Fusión (20 features)</div>
+                <div class="arrow">↓</div>
+                <div class="box">Inferencia Dual (40ms + 50ms)</div>
+                <div class="arrow">↓</div>
+                <div class="box">Weighted Average Fusion</div>
+                <div class="arrow">↓</div>
+                <div class="box">Post-procesamiento + Alertas</div>
+                <div class="arrow">↓</div>
+                <div class="box">Output: UI + API</div>
+            </div>
+        </div>
+
+        <h4 style="color: #003366; margin-top: 25px;">Especificaciones:</h4>
+        <ul style="margin-top: 10px;">
+            <li><span class="highlight">Modelo Facial:</span> Mini-Xception (500K params, 40ms)</li>
+            <li><span class="highlight">Modelo Postural:</span> MobileNet v3 (1.5M params, 50ms)</li>
+            <li><span class="highlight">Fusión:</span> Weighted Average (60% facial, 40% postural)</li>
+            <li><span class="highlight">Smoothing:</span> 5-frame temporal window</li>
+            <li><span class="highlight">Hardware Target:</span> Jetson Nano / RPi5</li>
+        </ul>
+        
+        </div>
+        <div class="footnote">Slide 5 de 5</div>
+    </div>
+    
+</body>
+</html>

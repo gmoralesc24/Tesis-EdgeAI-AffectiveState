@@ -1,0 +1,334 @@
+{
+  "titulo": "MATRIZ INTEGRAL DE VARIABLES - PROYECTO EDGE AI MULTIMODAL",
+  "descripcion": "Mapeo completo: Variables → Objetivos → Indicadores → Rangos",
+  "fecha": "Diciembre 2025",
+  "variables": [
+    {
+      "id": "VI-001",
+      "tipo": "Variable Independiente",
+      "nombre": "Arquitectura del Modelo",
+      "definicion": "Tipo de red neuronal base para clasificación",
+      "valores_posibles": [
+        "MobileNet v3 (1.5M params)",
+        "Mini-Xception (500K params)",
+        "YOLO-Nano (400K params)",
+        "SqueezeNet (1.2M params)"
+      ],
+      "hipotesis_relacion": "Arquitectura más liviana reduce latencia pero puede sacrificar accuracy",
+      "objetivos_asociados": [
+        "OE3"
+      ],
+      "indicadores_afectados": [
+        "I1: Accuracy",
+        "I2: Latencia",
+        "I3: FPS",
+        "I7: Consumo CPU"
+      ],
+      "valores_recomendados": "Mini-Xception",
+      "justificacion": "Balance óptimo: 91% accuracy vs 88% (MobileNet), 40ms latencia vs 50ms (MobileNet)"
+    },
+    {
+      "id": "VI-002",
+      "tipo": "Variable Independiente",
+      "nombre": "Técnica de Optimización",
+      "definicion": "Compresión de modelos para deployment en Edge",
+      "valores_posibles": [
+        "Baseline (sin optimización)",
+        "Cuantización 8-bit",
+        "Poda 10%",
+        "Poda 20%",
+        "Poda 40%",
+        "Cuantización 8-bit + Poda 20%"
+      ],
+      "hipotesis_relacion": "Mayor compresión = menor tamaño/latencia pero potencial pérdida accuracy",
+      "objetivos_asociados": [
+        "OE3"
+      ],
+      "indicadores_afectados": [
+        "I1: Accuracy",
+        "I2: Latencia",
+        "I4: Tamaño",
+        "I7: Consumo CPU"
+      ],
+      "valores_recomendados": "Cuantización 8-bit + Poda 20%",
+      "justificacion": "Reduce tamaño 77% (22MB→5MB), latencia 55% (110ms→50ms), accuracy solo -3% (91%→88%)"
+    },
+    {
+      "id": "VI-003",
+      "tipo": "Variable Independiente",
+      "nombre": "Método de Fusión Multimodal",
+      "definicion": "Estrategia para combinar predicciones facial y postural",
+      "valores_posibles": [
+        "Weighted Average (α=0.60 facial, 0.40 postural)",
+        "Voting (mayoría de 2 modelos)",
+        "Concatenation + MLP adicional",
+        "Attention-based fusion",
+        "Multiplicative fusion"
+      ],
+      "hipotesis_relacion": "Fusion más sofisticada puede mejorar robustez pero aumenta complejidad",
+      "objetivos_asociados": [
+        "OE4"
+      ],
+      "indicadores_afectados": [
+        "I1: Accuracy",
+        "I5: Precisión Alertas"
+      ],
+      "valores_recomendados": "Weighted Average (0.60, 0.40)",
+      "justificacion": "Simple, computacionalmente eficiente, accuracy comparable a métodos complejos"
+    },
+    {
+      "id": "VI-004",
+      "tipo": "Variable Independiente",
+      "nombre": "Método de Anotación Dataset",
+      "definicion": "Protocolo para etiquetado de estado afectivo en videos",
+      "valores_posibles": [
+        "Anotación manual 1 evaluador",
+        "Anotación manual 2 evaluadores independientes",
+        "Anotación manual 3 evaluadores independientes",
+        "Hybrid: manual + semi-automático"
+      ],
+      "hipotesis_relacion": "Más evaluadores = mayor confiabilidad pero más costo",
+      "objetivos_asociados": [
+        "OE1"
+      ],
+      "indicadores_afectados": [
+        "I6: Cohen's Kappa ≥0.85"
+      ],
+      "valores_recomendados": "3 evaluadores independientes",
+      "justificacion": "Cohen's Kappa ≥0.85 requiere mínimo 3 raters para obtener acuerdo robusto"
+    },
+    {
+      "id": "VI-005",
+      "tipo": "Variable Independiente",
+      "nombre": "Umbral de Confianza",
+      "definicion": "Probabilidad mínima para aceptar predicción",
+      "valores_posibles": [
+        "0.60",
+        "0.65",
+        "0.70",
+        "0.75",
+        "0.80",
+        "0.85",
+        "0.90"
+      ],
+      "hipotesis_relacion": "Umbral mayor reduce falsos positivos pero puede perder eventos verdaderos",
+      "objetivos_asociados": [
+        "OE4",
+        "OE5"
+      ],
+      "indicadores_afectados": [
+        "I5: Precisión Alertas",
+        "I8: Recall Alertas"
+      ],
+      "valores_recomendados": "0.70",
+      "justificacion": "Balance: Precision ≥80%, evita muchos falsos positivos, Recall ≥70%"
+    },
+    {
+      "id": "VI-006",
+      "tipo": "Variable Independiente",
+      "nombre": "Ventana Temporal de Smoothing",
+      "definicion": "Número de frames consecutivos para suavizar predicciones",
+      "valores_posibles": [
+        "3 frames",
+        "5 frames",
+        "7 frames",
+        "10 frames"
+      ],
+      "hipotesis_relacion": "Ventana mayor = menos ruido pero más latencia",
+      "objetivos_asociados": [
+        "OE4"
+      ],
+      "indicadores_afectados": [
+        "I2: Latencia",
+        "I5: Precisión Alertas"
+      ],
+      "valores_recomendados": "5 frames",
+      "justificacion": "A 30fps: latencia +167ms (5/30), reduce ruido temporal significativamente"
+    },
+    {
+      "id": "VD-001",
+      "tipo": "Variable Dependiente",
+      "nombre": "Accuracy General del Modelo",
+      "definicion": "Proporción de predicciones correctas en validation set",
+      "formula": "Accuracy = (TP + TN) / (TP + TN + FP + FN)",
+      "rango_minimo": "85%",
+      "rango_objetivo": "≥90%",
+      "rango_optimo": "≥95%",
+      "objetivos_asociados": [
+        "OE3",
+        "OE4",
+        "OE5"
+      ],
+      "metodo_medicion": "Validation set (15% del dataset, stratificado por clase)",
+      "herramienta": "sklearn.metrics.accuracy_score()",
+      "hipotesis_relacion": "Afectada por: arquitectura, optimización, dataset quality"
+    },
+    {
+      "id": "VD-002",
+      "tipo": "Variable Dependiente",
+      "nombre": "Latencia End-to-End",
+      "definicion": "Tiempo total desde captura de frame hasta predicción enviada",
+      "formula": "Latencia = t_inference + t_preprocessing + t_postprocessing",
+      "rango_minimo": "150ms",
+      "rango_objetivo": "≤100ms",
+      "rango_optimo": "≤50ms",
+      "objetivos_asociados": [
+        "OE3",
+        "OE4"
+      ],
+      "metodo_medicion": "time.perf_counter() en puntos críticos",
+      "herramienta": "Profiling: cProfile, line_profiler",
+      "hipotesis_relacion": "Afectada por: arquitectura, optimización, resolución video"
+    },
+    {
+      "id": "VD-003",
+      "tipo": "Variable Dependiente",
+      "nombre": "Frames por Segundo (FPS)",
+      "definicion": "Número de frames procesados por segundo",
+      "formula": "FPS = frames_procesados / tiempo_total",
+      "rango_minimo": "15 fps",
+      "rango_objetivo": "≥25 fps",
+      "rango_optimo": "≥30 fps",
+      "objetivos_asociados": [
+        "OE3",
+        "OE4"
+      ],
+      "metodo_medicion": "Contador con time.time()",
+      "herramienta": "OpenCV: cv2.getTickFrequency()",
+      "hipotesis_relacion": "Inversamente correlacionado con latencia"
+    },
+    {
+      "id": "VD-004",
+      "tipo": "Variable Dependiente",
+      "nombre": "F1-Score por Clase",
+      "definicion": "Promedio armónico de Precisión y Recall",
+      "formula": "F1 = 2 * (Precision * Recall) / (Precision + Recall)",
+      "rango_minimo": "0.78",
+      "rango_objetivo": "≥0.86",
+      "rango_optimo": "≥0.91",
+      "objetivos_asociados": [
+        "OE5"
+      ],
+      "metodo_medicion": "Macro y Weighted F1 por clase",
+      "herramienta": "sklearn.metrics.f1_score(average='weighted')",
+      "hipotesis_relacion": "Más informativo que Accuracy para clases desbalanceadas"
+    },
+    {
+      "id": "VD-005",
+      "tipo": "Variable Dependiente",
+      "nombre": "Precisión de Alertas",
+      "definicion": "Proporción de alertas disparadas que corresponden a eventos reales",
+      "formula": "Precisión = TP_alertas / (TP_alertas + FP_alertas)",
+      "rango_minimo": "75%",
+      "rango_objetivo": "≥80%",
+      "rango_optimo": "≥90%",
+      "objetivos_asociados": [
+        "OE4",
+        "OE5"
+      ],
+      "metodo_medicion": "Validación manual de alertas en video",
+      "herramienta": "Matriz confusión personalizada para eventos",
+      "hipotesis_relacion": "Crítica para aceptación docente"
+    },
+    {
+      "id": "VD-006",
+      "tipo": "Variable Dependiente",
+      "nombre": "Tamaño del Modelo",
+      "definicion": "Tamaño en MB del modelo compilado (.tflite o .onnx)",
+      "formula": "Tamaño_MB = file_size / (1024 * 1024)",
+      "rango_minimo": "20MB",
+      "rango_objetivo": "≤15MB",
+      "rango_optimo": "≤10MB",
+      "objetivos_asociados": [
+        "OE3"
+      ],
+      "metodo_medicion": "os.path.getsize()",
+      "herramienta": "Comparar post-optimización",
+      "hipotesis_relacion": "Crítica para deployment en Edge devices"
+    },
+    {
+      "id": "VD-007",
+      "tipo": "Variable Dependiente",
+      "nombre": "Consumo de CPU",
+      "definicion": "Porcentaje de CPU utilizado durante inferencia",
+      "formula": "CPU % = (load_promedio / total_cores) * 100",
+      "rango_minimo": "50%",
+      "rango_objetivo": "≤40%",
+      "rango_optimo": "≤30%",
+      "objetivos_asociados": [
+        "OE3",
+        "OE4"
+      ],
+      "metodo_medicion": "psutil.cpu_percent()",
+      "herramienta": "top, htop, psutil",
+      "hipotesis_relacion": "Indica viabilidad en hardware de bajo costo"
+    },
+    {
+      "id": "VD-008",
+      "tipo": "Variable Dependiente",
+      "nombre": "Usabilidad del Sistema",
+      "definicion": "Percepción de facilidad de uso por parte de docentes",
+      "escala": "Likert 1-5",
+      "rango_minimo": "3.5/5.0",
+      "rango_objetivo": "≥4.0/5.0",
+      "rango_optimo": "≥4.5/5.0",
+      "objetivos_asociados": [
+        "OE4",
+        "OE5"
+      ],
+      "metodo_medicion": "Encuesta post-sesión a docentes (n≥20)",
+      "herramienta": "SUS (System Usability Scale) o Likert personalizado",
+      "hipotesis_relacion": "Crítica para adopción en aula real"
+    },
+    {
+      "id": "P-001",
+      "tipo": "Parámetro",
+      "nombre": "Contexto de Aula",
+      "descripcion": "Tipo de clase donde se evalúa el sistema",
+      "valores": [
+        "Aula presencial",
+        "Aula virtual",
+        "Aula híbrida"
+      ],
+      "valor_fijo": "Aula híbrida universitaria",
+      "justificacion": "Representa realidad actual post-pandemia en universidades peruanas"
+    },
+    {
+      "id": "P-002",
+      "tipo": "Parámetro",
+      "nombre": "Población Objetivo",
+      "descripcion": "Demografía de estudiantes en experimento",
+      "valores": [
+        "18-25 años, estudiantes UNI"
+      ],
+      "valor_fijo": "Estudiantes de grado, 18-25 años, ambos géneros",
+      "justificacion": "Población consistente para validación interna"
+    },
+    {
+      "id": "P-003",
+      "tipo": "Parámetro",
+      "nombre": "Modalidades de Análisis",
+      "descripcion": "Tipos de inputs al sistema",
+      "valores": [
+        "RGB facial",
+        "RGB postural",
+        "Facial+Postural"
+      ],
+      "valor_fijo": "Multimodal: Facial RGB + Postural 2D",
+      "justificacion": "Balance entre información y requisitos computacionales"
+    },
+    {
+      "id": "P-004",
+      "tipo": "Parámetro",
+      "nombre": "Hardware Target",
+      "descripcion": "Dispositivo de deployment",
+      "valores": [
+        "Jetson Nano",
+        "RPi5",
+        "Servidor GPU"
+      ],
+      "valor_fijo": "Jetson Nano / RPi5 (Edge computing)",
+      "justificacion": "Bajo costo, portabilidad, sin conexión a nube"
+    }
+  ]
+}

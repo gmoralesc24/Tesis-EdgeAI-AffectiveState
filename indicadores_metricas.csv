@@ -1,0 +1,15 @@
+Indicador,Unidad,Valor Mínimo Aceptable,Valor Objetivo,Valor Óptimo,Método de Medición
+Precisión General (Accuracy),%,85%,≥90%,≥95%,Validation set predictions vs ground truth (Sklearn metrics)
+F1-Score por Clase,0.0-1.0,0.80,≥0.88,≥0.92,"F1 calculation per emotion class (True Pos, False Pos, False Neg)"
+Latencia End-to-End,ms,50ms,≤100ms,≤50ms,Timestamp: frame capture → prediction output
+Frames por Segundo (FPS),fps,20 fps,≥25 fps,≥30 fps,Frames processed per second (inference time)
+Tamaño del Modelo,MB,5MB,≤15MB,≤10MB,"Modelo .tflite, .onnx, .pt file size"
+Consumo de RAM,MB,100MB,≤250MB,≤200MB,Memory profiling during inference
+Consumo de CPU,%,20%,≤40%,≤30%,"CPU usage monitoring (psutil, torch.utils.benchmark)"
+Tasa de Falsos Positivos,%,5%,≤3%,≤2%,Confusion matrix analysis
+Tasa de Falsos Negativos,%,5%,≤3%,≤2%,Confusion matrix analysis
+Usabilidad Percibida (Likert),1-5,3.5/5.0,≥4.0/5.0,≥4.5/5.0,Survey administered to n=20-30 teachers (5-point scale)
+Exactitud de Alertas,%,75%,≥80%,≥90%,Alerts issued vs ground truth (Precision)
+Tasa de Utilización Dataset,%,90%,≥95%,≥98%,Total video frames used / Total available
+Precisión de Extracción de Landmarks,%,95%,≥98%,≥99%,Facial landmark detection vs manual ground truth
+Índice de Muestras Anotadas Correctas,%,93%,≥95%,≥97%,Annotated frames with inter-rater agreement (Cohen's Kappa ≥0.85)

@@ -1,0 +1,10 @@
+Tipo de Variable,Denominación,Valores/Niveles/Indicadores,Objetivo Asociado
+Variable Independiente,Arquitectura y Técnica de Optimización,"MobileNet, Mini-Xception, YOLO-Nano; Cuantización (8-bit, 16-bit); Poda (10-40%)",OE3
+Variable Independiente,Estrategia de Extracción de Características,"OpenFace, MediaPipe, MoveNet; PCA, Feature Selection; Landmarks (68 puntos)",OE2
+Variable Independiente,Diseño de Interfaz y Umbral de Alertas,"Fusion Strategy (Weighted Avg, Voting); Umbral confianza (0.6-0.9); Window size (3-5 frames)",OE4
+Variable Dependiente,Clasificación de Estados Afectivos,"Atención (0), Distracción (1), Fatiga (2), Neutral (3); Accuracy, F1-Score, Precision, Recall",OE2
+Variable Dependiente,Latencia del Sistema,Tiempo desde captura hasta predicción (ms); FPS (25-30); End-to-end latency (≤100ms),"OE3, OE5"
+Variable Dependiente,Satisfacción Percibida del Docente,Escala Likert (1-5); Usabilidad percibida; Utilidad pedagógica; Recomendación de uso,"OE4, OE5"
+Parámetro,Contexto Educativo (Aulas Híbridas),"Presencial, Remoto, Híbrido; Sesiones de clase real; Número de estudiantes (n≥30)",Global (OE1-OE5)
+Parámetro,Población Objetivo (Estudiantes Universitarios),Nivel universitario; Edad 18-25 años; Diversidad demográfica; Representatividad regional,Global (OE1-OE5)
+Parámetro,Modalidades de Análisis (Facial + Postural),"Análisis facial (emociones, mirada, landmarks); Análisis postural (pose, inclinación, presencia)",Global (OE1-OE5)
