@@ -49,7 +49,10 @@ def train_model(data_dir, model_type="mini_xception", epochs=20, batch_size=32):
     ]
     
     # 4. Entrenar
+    # 4. Entrenar
     print(f"Iniciando entrenamiento de {model_type} por {epochs} épocas...")
+    print(f"Dispositivo: GPU -> {tf.config.list_physical_devices('GPU')}")
+
     history = model.fit(
         train_ds,
         validation_data=val_ds,
@@ -57,6 +60,8 @@ def train_model(data_dir, model_type="mini_xception", epochs=20, batch_size=32):
         callbacks=cbs
     )
     
+    # Guardar modelo final explícitamente
+    model.save(f"models/checkpoints/{model_type}_final.keras")
     return history
 
 if __name__ == "__main__":

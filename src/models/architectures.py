@@ -16,7 +16,15 @@ def build_mobilenet_v3_small(input_shape=(224, 224, 3), num_classes=4):
     base_model.trainable = False
     
     inputs = tf.keras.Input(shape=input_shape)
-    x = base_model(inputs, training=False)
+    # [FIX] Normalización: MobileNetV3 espera [-1, 1] o [0, 1]. Keras App lo suele manejar, 
+    # pero para seguridad explicita añadimos Rescaling si la entrada es raw [0,255].
+    # MobileNetV3 específico de Keras incluye su preprocesamiento, pero Mini-Xception NO.
+    
+    # Para MobileNetV3Small de Keras, la documentación dice que "inputs are expected to be float input values", 
+    # pero `preprocess_input` escala a [-1, 1]. Haremos un rescale manual simple a [0, 1] que suele funcionar bien trasnfer learning.
+    x = layers.Rescaling(1./255)(inputs)
+    
+    x = base_model(x, training=False)
     x = layers.GlobalAveragePooling2D()(x)
     x = layers.Dropout(0.2)(x)
     outputs = layers.Dense(num_classes, activation='softmax')(x)
@@ -26,12 +34,14 @@ def build_mobilenet_v3_small(input_shape=(224, 224, 3), num_classes=4):
 
 def build_mini_xception(input_shape=(48, 48, 1), num_classes=4):
     """
-    Implementación de Mini-Xception, popular para reconocimiento de emociones en tiempo real.
-    Basado en: 'Real-time Convolutional Neural Networks for Emotion and Gender Classification'
+    Implementación de Mini-Xception.
     """
     input_layer = layers.Input(shape=input_shape)
     
-    x = layers.Conv2D(8, (3, 3), padding='same', use_bias=False)(input_layer)
+    # [FIX] Normalización indispensable [0, 255] -> [0, 1]
+    x = layers.Rescaling(1./255)(input_layer)
+    
+    x = layers.Conv2D(8, (3, 3), padding='same', use_bias=False)(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation('relu')(x)
     
