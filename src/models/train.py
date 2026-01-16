@@ -1,9 +1,8 @@
 import tensorflow as tf
-from tensorflow.keras import callbacks, optimizers
+from tensorflow.keras import callbacks, optimizers, layers
 import argparse
 import os
 from src.models.architectures import build_mini_xception, build_mobilenet_v3_small
-import tensorflow.keras.layers as layers
 
 # asumimos que existe un data loader o usamos tf.keras.utils.image_dataset_from_directory
 
