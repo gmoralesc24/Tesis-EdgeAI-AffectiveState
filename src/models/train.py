@@ -48,10 +48,22 @@ def train_model(data_dir, model_type="mini_xception", epochs=20, batch_size=32):
         callbacks.ReduceLROnPlateau(factor=0.5, patience=3)
     ]
     
-    # 4. Entrenar
-    # 4. Entrenar
-    print(f"Iniciando entrenamiento de {model_type} por {epochs} épocas...")
+    # Data Augmentation (Solo activa durante entrenamiento)
+    data_augmentation = tf.keras.Sequential([
+        layers.RandomFlip("horizontal"),
+        layers.RandomRotation(0.1),
+        layers.RandomZoom(0.1),
+    ])
+
+    # 4. Entrenar (Fase 1: Backbone Congelado)
+    print(f"Fase 1: Entrenamiento inicial (Backbone congelado) por {epochs} épocas...")
     print(f"Dispositivo: GPU -> {tf.config.list_physical_devices('GPU')}")
+
+    # Aplicar augmentation en el map si es posible, o usar layers dentro del modelo. 
+    # Para simplicidad y performance en tf.data, lo haremos parte del modelo en architectures o aqui.
+    # Dado que architectures.py retorna un modelo funcional, mejor inyectamos augmentation antes si es posible,
+    # o simplemente lo dejamos si el dataset es pequeño.
+    # MEJOR OPCIÓN: Fine-Tuning explícito.
 
     history = model.fit(
         train_ds,
@@ -60,6 +72,35 @@ def train_model(data_dir, model_type="mini_xception", epochs=20, batch_size=32):
         callbacks=cbs
     )
     
+    # 5. Fine-Tuning (Fase 2: Descongelar últimas capas)
+    # Solo para MobileNet, no tiene sentido para Mini-Xception (ya es pequeño y trainable)
+    if model_type == "mobilenet":
+        print("\n--- Iniciando Fase 2: Fine-Tuning ---")
+        base_model = model.layers[2] # Indice asumiendo: Input -> Rescaling -> MobileNet -> ...
+        if isinstance(base_model, tf.keras.Model):
+            base_model.trainable = True
+            
+            # Congelar las primeras 100 capas (MobileNetV3 tiene muchas) para no romper features básicos
+            for layer in base_model.layers[:-30]: 
+                layer.trainable = False
+                
+            model.compile(
+                optimizer=optimizers.Adam(1e-5), # Learning Rate MUY bajo para afinamiento
+                loss='sparse_categorical_crossentropy',
+                metrics=['accuracy']
+            )
+            
+            total_epochs = epochs + 10 # 10 épocas extra
+            history_fine = model.fit(
+                train_ds,
+                validation_data=val_ds,
+                epochs=total_epochs,
+                initial_epoch=history.epoch[-1],
+                callbacks=cbs
+            )
+            # Combinar historias para retorno (opcional, aqui retornamos la ultima)
+            history = history_fine
+
     # Guardar modelo final explícitamente
     model.save(f"models/checkpoints/{model_type}_final.keras")
     return history

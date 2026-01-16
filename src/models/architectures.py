@@ -16,13 +16,14 @@ def build_mobilenet_v3_small(input_shape=(224, 224, 3), num_classes=4):
     base_model.trainable = False
     
     inputs = tf.keras.Input(shape=input_shape)
-    # [FIX] Normalización: MobileNetV3 espera [-1, 1] o [0, 1]. Keras App lo suele manejar, 
-    # pero para seguridad explicita añadimos Rescaling si la entrada es raw [0,255].
-    # MobileNetV3 específico de Keras incluye su preprocesamiento, pero Mini-Xception NO.
     
-    # Para MobileNetV3Small de Keras, la documentación dice que "inputs are expected to be float input values", 
-    # pero `preprocess_input` escala a [-1, 1]. Haremos un rescale manual simple a [0, 1] que suele funcionar bien trasnfer learning.
-    x = layers.Rescaling(1./255)(inputs)
+    # [MEJORA] Data Augmentation integrada en el modelo (Solo activa en training=True)
+    x = layers.RandomFlip("horizontal")(inputs)
+    x = layers.RandomRotation(0.1)(x)
+    x = layers.RandomZoom(0.1)(x)
+
+    # [FIX] Normalización: MobileNetV3 espera [-1, 1] o [0, 1].
+    x = layers.Rescaling(1./127.5, offset=-1)(x) # Estandar para MobileNet [-1, 1]
     
     x = base_model(x, training=False)
     x = layers.GlobalAveragePooling2D()(x)
